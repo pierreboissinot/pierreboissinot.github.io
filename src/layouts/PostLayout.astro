@@ -1,0 +1,77 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import SeriesNav from '../components/SeriesNav.astro';
+import { getEpisodes, readingTimeMinutes, seriesUrl, type BlogPost, type Lang } from '../lib/blog';
+import { useTranslations } from '../i18n/utils';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  lang: Lang;
+  post: BlogPost;
+  translationUrl?: string | null;
+}
+
+const { lang, post, translationUrl = null } = Astro.props;
+const t = useTranslations(lang);
+const minutes = readingTimeMinutes(post.body);
+
+const seriesRef = post.data.series;
+const seriesEntry = seriesRef ? await getEntry(seriesRef) : null;
+const episodes = seriesRef ? await getEpisodes(lang, seriesRef.id) : [];
+const episodeIndex = episodes.findIndex((p) => p.id === post.id);
+const kicker = seriesRef
+  ? `CHANGE-${String(post.data.seriesOrder ?? 0).padStart(3, '0')} · ${t('series.episode').toUpperCase()} ${post.data.seriesOrder} · ${minutes} MIN`
+  : null;
+---
+
+<BaseLayout
+  {lang}
+  title={post.data.title}
+  description={post.data.description}
+  {translationUrl}
+  ogType="article"
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+>
+  <article>
+    <header>
+      {kicker && <p class="kicker">{kicker}</p>}
+      {
+        seriesEntry && (
+          <p class="series-banner">
+            {t('series.episode')} {post.data.seriesOrder} {t('series.of')} {episodes.length} —{' '}
+            <a href={seriesUrl(lang, seriesEntry.id)}>{seriesEntry.data.title[lang]}</a>
+          </p>
+        )
+      }
+      <h1>{post.data.title}</h1>
+      {post.data.description && <p class="deck">{post.data.description}</p>}
+      <p class="meta">
+        {t('post.published')} <FormattedDate date={post.data.pubDate} {lang} /> · {minutes}{' '}
+        {t('post.readingTime')}
+        {
+          post.data.updatedDate && (
+            <>
+              {' '}
+              — {t('post.updated')} <FormattedDate date={post.data.updatedDate} {lang} />
+            </>
+          )
+        }
+      </p>
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+    {
+      seriesEntry && episodeIndex !== -1 && (
+        <SeriesNav
+          {lang}
+          series={seriesEntry}
+          prev={episodes[episodeIndex - 1] ?? null}
+          next={episodes[episodeIndex + 1] ?? null}
+        />
+      )
+    }
+  </article>
+</BaseLayout>

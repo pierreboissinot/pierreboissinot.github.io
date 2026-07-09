@@ -1,0 +1,58 @@
+export const defaultLang = 'en';
+
+export const ui = {
+  en: {
+    'site.title': 'Pierre Boissinot',
+    'site.description':
+      'Software engineering field notes — spec-driven development, AI agents, PHP, tooling.',
+    'nav.posts': 'Posts',
+    'nav.series': 'Series',
+    'home.latest': 'Latest posts',
+    'home.allPosts': 'All posts',
+    'post.published': 'Published',
+    'post.updated': 'Updated',
+    'post.readingTime': 'min read',
+    'post.backToList': 'All posts',
+    'post.prev': 'Previous episode',
+    'post.next': 'Next episode',
+    'series.episode': 'Episode',
+    'series.of': 'of',
+    'series.episodes': 'episodes',
+    'series.singleEpisode': 'episode',
+    'switcher.label': 'Français',
+    'switcher.fallbackTitle': 'This page is not translated yet — go to the French home',
+    'footer.rss': 'RSS feed',
+    'footer.builtWith': 'No tracking, no cookies. Just words.',
+    '404.title': 'Page not found',
+    '404.body': 'This page does not exist. The spec never mentioned it.',
+    '404.home': 'Back home',
+  },
+  fr: {
+    'site.title': 'Pierre Boissinot',
+    'site.description':
+      'Notes de terrain d’un dev — spec-driven development, agents IA, PHP, outillage.',
+    'nav.posts': 'Articles',
+    'nav.series': 'Séries',
+    'home.latest': 'Derniers articles',
+    'home.allPosts': 'Tous les articles',
+    'post.published': 'Publié le',
+    'post.updated': 'Mis à jour le',
+    'post.readingTime': 'min de lecture',
+    'post.backToList': 'Tous les articles',
+    'post.prev': 'Épisode précédent',
+    'post.next': 'Épisode suivant',
+    'series.episode': 'Épisode',
+    'series.of': 'sur',
+    'series.episodes': 'épisodes',
+    'series.singleEpisode': 'épisode',
+    'switcher.label': 'English',
+    'switcher.fallbackTitle': 'Cette page n’est pas encore traduite — aller à l’accueil anglais',
+    'footer.rss': 'Flux RSS',
+    'footer.builtWith': 'Pas de tracking, pas de cookies. Juste des mots.',
+    '404.title': 'Page introuvable',
+    '404.body': 'Cette page n’existe pas. La spec n’en a jamais parlé.',
+    '404.home': 'Retour à l’accueil',
+  },
+} as const;
+
+export type UiKey = keyof (typeof ui)['en'];

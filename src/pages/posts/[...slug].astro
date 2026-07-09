@@ -1,0 +1,19 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPosts, getTranslation, postUrl, slugOf } from '../../lib/blog';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts('en');
+  // params.slug must be the id WITHOUT the language prefix.
+  return posts.map((post) => ({ params: { slug: slugOf(post) }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const translation = await getTranslation(post);
+---
+
+<PostLayout lang="en" {post} translationUrl={translation ? postUrl(translation) : null}>
+  <Content />
+</PostLayout>

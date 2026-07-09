@@ -1,0 +1,30 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import { langOf, postUrl, readingTimeMinutes, type BlogPost } from '../lib/blog';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  post: BlogPost;
+  showEpisodeNumber?: boolean;
+}
+
+const { post, showEpisodeNumber = false } = Astro.props;
+const lang = langOf(post);
+const t = useTranslations(lang);
+const minutes = readingTimeMinutes(post.body);
+---
+
+<article class="post-card">
+  {
+    showEpisodeNumber && post.data.seriesOrder && (
+      <span class="episode-number" aria-hidden="true">
+        {String(post.data.seriesOrder).padStart(2, '0')}
+      </span>
+    )
+  }
+  <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
+  {post.data.description && <p class="description">{post.data.description}</p>}
+  <p class="meta">
+    <FormattedDate date={post.data.pubDate} {lang} /> · {minutes} {t('post.readingTime')}
+  </p>
+</article>

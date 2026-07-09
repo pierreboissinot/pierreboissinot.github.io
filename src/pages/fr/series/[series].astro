@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getEpisodes, otherLang, seriesUrl } from '../../../lib/blog';
+import { useTranslations } from '../../../i18n/utils';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allSeries = await getCollection('series');
+  const paths = [];
+  for (const entry of allSeries) {
+    const episodes = await getEpisodes('fr', entry.id);
+    if (episodes.length > 0) {
+      paths.push({ params: { series: entry.id }, props: { entry, episodes } });
+    }
+  }
+  return paths;
+}
+
+const lang = 'fr';
+const t = useTranslations(lang);
+const { entry, episodes } = Astro.props;
+const otherEpisodes = await getEpisodes(otherLang(lang), entry.id);
+const translationUrl = otherEpisodes.length > 0 ? seriesUrl(otherLang(lang), entry.id) : null;
+const countLabel = episodes.length > 1 ? t('series.episodes') : t('series.singleEpisode');
+---
+
+<BaseLayout
+  {lang}
+  title={entry.data.title[lang]}
+  description={entry.data.description[lang]}
+  {translationUrl}
+>
+  <section class="hero">
+    <p class="kicker">{t('nav.series').toUpperCase()} · {episodes.length} {countLabel.toUpperCase()}</p>
+    <h1>{entry.data.title[lang]}</h1>
+    <p class="deck">{entry.data.description[lang]}</p>
+  </section>
+  <ol class="episode-list">
+    {
+      episodes.map((post) => (
+        <li>
+          <PostCard {post} showEpisodeNumber />
+        </li>
+      ))
+    }
+  </ol>
+</BaseLayout>

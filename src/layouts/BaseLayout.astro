@@ -1,0 +1,33 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { Lang } from '../lib/blog';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  translationUrl?: string | null;
+  ogType?: 'website' | 'article';
+  pubDate?: Date;
+  updatedDate?: Date;
+}
+
+const { lang, title, description, translationUrl = null, ogType, pubDate, updatedDate } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <BaseHead {lang} {title} {description} {translationUrl} {ogType} {pubDate} {updatedDate} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header {lang} {translationUrl} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer {lang} />
+  </body>
+</html>

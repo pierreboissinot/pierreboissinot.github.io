@@ -1,0 +1,24 @@
+---
+// Zero-framework theme toggle. The pre-paint script in BaseHead sets the
+// initial .dark class; this button flips and persists it.
+---
+
+<button type="button" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+</button>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.theme-toggle');
+  const sync = () => {
+    const dark = document.documentElement.classList.contains('dark');
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(dark)));
+  };
+  buttons.forEach((button) =>
+    button.addEventListener('click', () => {
+      const dark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      sync();
+    }),
+  );
+  sync();
+</script>

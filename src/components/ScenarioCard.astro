@@ -1,0 +1,18 @@
+---
+// The site's signature element: an OpenSpec-style GIVEN/WHEN/THEN scenario
+// card. Used from .astro pages; markdown content uses the equivalent
+// <aside class="scenario"> raw-HTML convention styled by the same CSS.
+interface Props {
+  given: string;
+  when: string;
+  then: string;
+}
+
+const { given, when, then } = Astro.props;
+---
+
+<aside class="scenario">
+  <p><b>GIVEN</b> {given}</p>
+  <p><b>WHEN</b> {when}</p>
+  <p><b>THEN</b> {then}</p>
+</aside>

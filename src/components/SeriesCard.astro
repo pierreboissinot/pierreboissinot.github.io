@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { seriesUrl, type Lang } from '../lib/blog';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  entry: CollectionEntry<'series'>;
+  episodeCount: number;
+}
+
+const { lang, entry, episodeCount } = Astro.props;
+const t = useTranslations(lang);
+const countLabel = episodeCount > 1 ? t('series.episodes') : t('series.singleEpisode');
+---
+
+<aside class="series-card">
+  <p class="kicker">{t('nav.series').toUpperCase()} · {episodeCount} {countLabel.toUpperCase()}</p>
+  <h2><a href={seriesUrl(lang, entry.id)}>{entry.data.title[lang]}</a></h2>
+  <p>{entry.data.description[lang]}</p>
+</aside>
