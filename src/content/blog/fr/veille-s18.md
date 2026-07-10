@@ -1,7 +1,8 @@
 ---
 title: Veille semaine 18
-date: "2018-05-06T22:12:03.284Z"
-description: ""
+pubDate: "2018-05-06T22:12:03.284Z"
+description: "Première veille hebdo : Psalm, l'analyseur statique de Vimeo, git-standup pour retracer les contributions, et Phpactor pour le refactoring en PHP."
+tags: [veille, php]
 ---
 
 Première trace écrite de ma veille hebdo.

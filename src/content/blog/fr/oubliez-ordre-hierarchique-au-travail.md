@@ -1,7 +1,8 @@
 ---
 title: Oubliez l'ordre hiérarchique au travail
-date: "2017-01-01T22:12:03.284Z"
-description: ""
+pubDate: "2017-01-01T22:12:03.284Z"
+description: "Synthèse du talk TED de Margaret Heffernan : regrouper les éléments les plus productifs nuit à l'équipe, c'est le capital social qui fait son efficacité."
+tags: [conference, management]
 ---
 
 Synthèse du talk TED "Forget the pecking order at work" de Margaret Heffernan.

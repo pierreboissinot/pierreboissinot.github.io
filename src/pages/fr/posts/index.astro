@@ -11,6 +11,7 @@ const posts = await getPosts(lang);
 
 <BaseLayout {lang} title={t('nav.posts')} description={t('site.description')} translationUrl="/posts/">
   <section class="hero">
+    <p class="kicker">{posts.length} {t('nav.posts')}</p>
     <h1>{t('nav.posts')}</h1>
   </section>
   <section class="post-list">

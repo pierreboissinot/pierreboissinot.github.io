@@ -1,7 +1,8 @@
 ---
 title: Standup
-date: "2018-05-03T22:12:03.284Z"
-description: ""
+pubDate: "2018-05-03T22:12:03.284Z"
+description: "Et si le daily standup devenait en partie asynchrone ? Réflexion à partir des pratiques de Github et de Gitlab pour un meeting réservé aux échanges."
+tags: [agile, standup]
 ---
 
 A la Devoxx2018, [A.Hélaïli](https://twitter.com/AlainHelaili) interroge l'audience avec des questions qui ont fait echo à ce que je vis acutellement au travail:[conférence](https://www.youtube.com/watch?v=dUKavg7H3VM)

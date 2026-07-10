@@ -7,7 +7,7 @@ export async function GET(context) {
   return rss({
     title: ui.fr['site.title'],
     description: ui.fr['site.description'],
-    site: context.site,
+    site: new URL('/fr/', context.site),
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,

@@ -74,5 +74,11 @@ const siteName = 'Pierre Boissinot';
     const stored = localStorage.getItem('theme');
     const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     document.documentElement.classList.toggle('dark', dark);
+    // JS-managed theme-color (last one wins over the media-query pair above,
+    // and follows the toggle instead of only the system preference).
+    const meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    meta.content = dark ? '#0A0A0A' : '#F7F7F2';
+    document.head.appendChild(meta);
   })();
 </script>

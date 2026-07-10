@@ -22,9 +22,11 @@ const minutes = readingTimeMinutes(post.body);
       </span>
     )
   }
-  <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
-  {post.data.description && <p class="description">{post.data.description}</p>}
-  <p class="meta">
-    <FormattedDate date={post.data.pubDate} {lang} /> · {minutes} {t('post.readingTime')}
-  </p>
+  <div class="post-card-body">
+    <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
+    {post.data.description && <p class="description">{post.data.description}</p>}
+    <p class="meta">
+      <FormattedDate date={post.data.pubDate} {lang} /> · {minutes} {t('post.readingTime')}
+    </p>
+  </div>
 </article>

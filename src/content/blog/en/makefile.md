@@ -1,7 +1,8 @@
 ---
 title: Makefile - Love at first strike
-date: "2018-04-22T22:12:03.284Z"
-description: ""
+pubDate: "2018-04-22T22:12:03.284Z"
+description: "How a 50-year-old tool made my life easier: a Makefile stays up to date, orders commands for you and beats both READMEs and personal aliases."
+tags: [make, tooling]
 ---
 
 In this post I'll explain how a 50 yrs old tool make my life easier.

@@ -1,7 +1,8 @@
 ---
 title: Mopidy - Ecouter sa musique quelque soit le media
-date: "2018-04-26T22:12:03.284Z"
-description: ""
+pubDate: "2018-04-26T22:12:03.284Z"
+description: "Écouter toute sa collection musicale (Spotify, Soundcloud, fichiers locaux) depuis un client léger grâce au serveur Mopidy et à ncmpcpp."
+tags: [musique, mopidy]
 ---
 
 Sur un PC je mets souvent un fond de musique que je vais chercher sur:

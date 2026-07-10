@@ -20,7 +20,10 @@ const seriesWithEpisodes = (
 
 <BaseLayout {lang} title={t('site.title')} description={t('site.description')} translationUrl="/">
   <section class="hero">
-    <h1>{t('site.title')}</h1>
+    <p class="kicker">{t('home.heroKicker')}</p>
+    <h1>
+      {t('home.heroLine1')}<br /><span class="hl">{t('home.heroLine2')}</span>
+    </h1>
     <p class="deck">{t('site.description')}</p>
   </section>
   {

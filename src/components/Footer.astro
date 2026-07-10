@@ -13,12 +13,12 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <p class="wordmark-big">pierre boissinot.</p>
-  <p>{t('footer.builtWith')}</p>
-  <nav aria-label="Footer">
+  <p class="wordmark-big">pierre boissinot<span class="dot" aria-hidden="true">.</span></p>
+  <nav aria-label={t('a11y.footerNav')}>
     <a href={rssHref}>{t('footer.rss')}</a>
     <a href="https://github.com/pierreboissinot" rel="me">GitHub</a>
     <a href="https://www.linkedin.com/in/pierreboissinot/" rel="me">LinkedIn</a>
   </nav>
+  <p class="tagline">{t('footer.builtWith')}</p>
   <p class="colophon">© {year} Pierre Boissinot</p>
 </footer>

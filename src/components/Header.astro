@@ -13,15 +13,13 @@ const { lang, translationUrl = null } = Astro.props;
 const t = useTranslations(lang);
 const home = lang === 'fr' ? '/fr/' : '/';
 const postsUrl = lang === 'fr' ? '/fr/posts/' : '/posts/';
-const seriesUrl = lang === 'fr' ? '/fr/series/openspec/' : '/series/openspec/';
 ---
 
 <header class="site-header">
   <a href={home} class="wordmark">pierre boissinot.</a>
-  <nav aria-label="Main">
+  <nav aria-label={t('a11y.mainNav')}>
     <a href={postsUrl}>{t('nav.posts')}</a>
-    <a href={seriesUrl}>OpenSpec</a>
     <LanguageSwitcher {lang} {translationUrl} />
-    <ThemeToggle />
+    <ThemeToggle {lang} />
   </nav>
 </header>

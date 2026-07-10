@@ -1,7 +1,8 @@
 ---
 title: CoreOS, an introduction
-date: "2017-01-01T22:12:03.284Z"
-description: ""
+pubDate: "2017-01-01T22:12:03.284Z"
+description: "Synthèse du talk de Brandon Philips sur les conteneurs et sur CoreOS, un système Linux minimal conçu pour les déployer à grande échelle avec etcd et fleet."
+tags: [coreos, docker, conference]
 ---
 
 Syntèse du talk de [Brandon Philips](https://twitter.com/BrandonPhilips).

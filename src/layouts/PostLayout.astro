@@ -35,16 +35,9 @@ const kicker = seriesRef
   updatedDate={post.data.updatedDate}
 >
   <article>
-    <header>
+    <header class="post-header">
       {kicker && <p class="kicker">{kicker}</p>}
-      {
-        seriesEntry && (
-          <p class="series-banner">
-            {t('series.episode')} {post.data.seriesOrder} {t('series.of')} {episodes.length} —{' '}
-            <a href={seriesUrl(lang, seriesEntry.id)}>{seriesEntry.data.title[lang]}</a>
-          </p>
-        )
-      }
+      {!kicker && <p class="kicker">{minutes} {t('post.readingTime').toUpperCase()}</p>}
       <h1>{post.data.title}</h1>
       {post.data.description && <p class="deck">{post.data.description}</p>}
       <p class="meta">
@@ -59,6 +52,14 @@ const kicker = seriesRef
           )
         }
       </p>
+      {
+        seriesEntry && (
+          <p class="series-banner">
+            {t('series.episode')} {post.data.seriesOrder} {t('series.of')} {episodes.length} —{' '}
+            <a href={seriesUrl(lang, seriesEntry.id)}>{seriesEntry.data.title[lang]}</a>
+          </p>
+        )
+      }
     </header>
     <div class="prose">
       <slot />

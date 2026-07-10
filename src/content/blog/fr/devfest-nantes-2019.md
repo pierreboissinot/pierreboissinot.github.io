@@ -1,8 +1,8 @@
 ---
 title: Devfest Nantes 2019
-date: "2019-10-27T00:00:00Z"
+pubDate: "2019-10-27T00:00:00Z"
 description: "21 et 22 octobre 2019 à la Cité des Congrès de Nantes"
-show_reading_time: true
+tags: [conference, devfest]
 ---
 
 # Les stands

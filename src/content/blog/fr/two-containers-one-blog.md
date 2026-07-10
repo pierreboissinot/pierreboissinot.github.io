@@ -1,7 +1,8 @@
 ---
 title: 2 containers 1 blog
-date: "2017-01-01T22:12:03.284Z"
-description: ""
+pubDate: "2017-01-01T22:12:03.284Z"
+description: "Monter rapidement un blog simple avec deux containers Docker : Ghost pour l'édition des posts et Caddy en reverse proxy avec TLS automatique."
+tags: [docker, blog]
 ---
 
 
