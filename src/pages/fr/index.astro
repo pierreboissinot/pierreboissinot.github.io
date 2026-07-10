@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import SeriesCard from '../../components/SeriesCard.astro';
+import { getPosts, getEpisodes } from '../../lib/blog';
+import { useTranslations } from '../../i18n/utils';
+import { getCollection } from 'astro:content';
+
+const lang = 'fr';
+const t = useTranslations(lang);
+const posts = await getPosts(lang);
+const latest = posts.slice(0, 5);
+const allSeries = await getCollection('series');
+const seriesWithEpisodes = (
+  await Promise.all(
+    allSeries.map(async (entry) => ({ entry, episodes: await getEpisodes(lang, entry.id) })),
+  )
+).filter((s) => s.episodes.length > 0);
+---
+
+<BaseLayout {lang} title={t('site.title')} description={t('site.description')} translationUrl="/">
+  <section class="hero">
+    <p class="kicker">{t('home.heroKicker')}</p>
+    <h1>
+      {t('home.heroLine1')}<br /><span class="hl">{t('home.heroLine2')}</span>
+    </h1>
+    <p class="deck">{t('site.description')}</p>
+  </section>
+  {
+    seriesWithEpisodes.map(({ entry, episodes }) => (
+      <SeriesCard {lang} {entry} episodeCount={episodes.length} />
+    ))
+  }
+  <section class="post-list">
+    <h2>{t('home.latest')}</h2>
+    {latest.map((post) => <PostCard {post} />)}
+    <a class="all-posts-link" href="/fr/posts/">{t('home.allPosts')} →</a>
+  </section>
+</BaseLayout>

@@ -1,0 +1,15 @@
+---
+import { localeOf } from '../i18n/utils';
+import type { Lang } from '../lib/blog';
+
+interface Props {
+  date: Date;
+  lang: Lang;
+}
+
+const { date, lang } = Astro.props;
+---
+
+<time datetime={date.toISOString()}>
+  {date.toLocaleDateString(localeOf(lang), { timeZone: 'UTC', dateStyle: 'long' })}
+</time>

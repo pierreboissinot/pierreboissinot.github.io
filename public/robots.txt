@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pierreboissinot.github.io/sitemap-index.xml

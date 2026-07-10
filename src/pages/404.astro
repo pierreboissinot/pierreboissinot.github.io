@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ui } from '../i18n/ui';
+---
+
+<BaseLayout lang="en" title={ui.en['404.title']} description="404" translationUrl={null}>
+  <section class="hero">
+    <p class="kicker">404 · SCENARIO NOT FOUND</p>
+    <h1>{ui.en['404.title']}</h1>
+    <p class="deck">{ui.en['404.body']}</p>
+    <p class="deck" lang="fr">{ui.fr['404.body']}</p>
+    <p class="not-found-links">
+      <a href="/">{ui.en['404.home']} (EN)</a> · <a href="/fr/" lang="fr">{ui.fr['404.home']} (FR)</a>
+    </p>
+  </section>
+</BaseLayout>

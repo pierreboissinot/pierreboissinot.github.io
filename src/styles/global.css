@@ -1,0 +1,965 @@
+/* ==========================================================================
+   EDITORIAL SPEC — design system
+   Ink #0A0A0A · Paper #F7F7F2 · Chartreuse #D4FF3F
+   Display/body: Archivo — Kickers/meta/code: JetBrains Mono
+   A11y contract: in LIGHT mode chartreuse is NEVER a text colour — it only
+   appears as highlight background (with ink text), thick underlines and
+   ::selection. In DARK mode chartreuse text is allowed (17:1 on ink).
+   ========================================================================== */
+
+@import 'tailwindcss';
+
+/* Dark mode = .dark class on <html>, set pre-paint in BaseHead. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-paper: #f7f7f2;
+  --color-chartreuse: #d4ff3f;
+  --color-paper-dim: #ecece3; /* raised surface on paper */
+  --color-ink-raised: #171712; /* raised surface on ink */
+  --color-mud: #5a5a52; /* muted text on paper — 6.4:1 */
+  --color-ash: #a3a399; /* muted text on ink — 7.7:1 */
+
+  --font-sans: var(--font-archivo, 'Archivo'), system-ui, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono, 'JetBrains Mono'), ui-monospace, 'SFMono-Regular', Menlo,
+    monospace;
+}
+
+/* --------------------------------------------------------------------------
+   Semantic tokens per theme
+   --edge         structural borders (ink / paper)
+   --edge-accent  accent edges: ink in light → chartreuse in dark
+   --accent-text  "accent-coloured" text: resolves to ink in light (a11y)
+   -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg: var(--color-paper);
+    --fg: var(--color-ink);
+    --muted: var(--color-mud);
+    --surface: var(--color-paper-dim);
+    --edge: var(--color-ink);
+    --edge-accent: var(--color-ink);
+    --accent-text: var(--color-ink);
+    --focus: var(--color-ink);
+    --rule: 6px;
+    --bleed: max(1rem, calc((100% - 64rem) / 2));
+  }
+
+  .dark {
+    color-scheme: dark;
+    --bg: var(--color-ink);
+    --fg: var(--color-paper);
+    --muted: var(--color-ash);
+    --surface: var(--color-ink-raised);
+    --edge: var(--color-paper);
+    --edge-accent: var(--color-chartreuse);
+    --accent-text: var(--color-chartreuse);
+    --focus: var(--color-chartreuse);
+  }
+
+  html {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main {
+    flex: 1;
+    padding-inline: var(--bleed);
+    padding-block: 2.5rem 5.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  ::selection {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  a,
+  button {
+    transition:
+      background-color 120ms ease-out,
+      color 120ms ease-out,
+      border-color 120ms ease-out,
+      text-decoration-color 120ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------ */
+  /* Skip link                                                           */
+  /* ------------------------------------------------------------------ */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(calc(-100% - 1.5rem));
+    background-color: var(--fg);
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.65rem 1rem;
+    transition: transform 120ms ease-out;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Header                                                              */
+  /* ------------------------------------------------------------------ */
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.9rem var(--bleed);
+    border-bottom: 3px solid var(--edge);
+  }
+
+  .site-header .wordmark {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: inherit;
+    text-decoration: none;
+    padding: 0.35rem;
+    margin-left: -0.35rem;
+    white-space: nowrap;
+  }
+
+  .site-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+  }
+
+  .site-header nav a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: inherit;
+    text-decoration: none;
+    padding: 0.35rem 0.45rem;
+  }
+
+  .site-header a:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .dark .site-header a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+  }
+
+  .lang-switcher {
+    border: 2px solid var(--edge);
+    font-weight: 700;
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0;
+    border: 2px solid var(--edge);
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .theme-toggle svg {
+    display: block;
+  }
+
+  .theme-toggle .icon-sun {
+    display: none;
+  }
+
+  .dark .theme-toggle .icon-sun {
+    display: block;
+  }
+
+  .dark .theme-toggle .icon-moon {
+    display: none;
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .dark .theme-toggle:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+  }
+
+  /* Nav fits on one line at 360px — no burger. */
+  @media (max-width: 26.25em) {
+    .site-header .wordmark {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .site-header nav a {
+      font-size: 0.6875rem;
+      padding: 0.3rem;
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Editorial primitives: kicker, deck, meta                            */
+  /* ------------------------------------------------------------------ */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+    margin: 0 0 1.1rem;
+  }
+
+  /* OpenSpec task-checkbox motif */
+  .kicker::before {
+    content: '';
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    background-color: currentColor;
+    margin-right: 0.6em;
+  }
+
+  .deck {
+    font-size: clamp(1.15rem, 1.02rem + 0.65vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 42rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .deck + .deck {
+    margin-top: 0.5rem;
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.1rem 0 0;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Hero (home, listings) & article header                              */
+  /* ------------------------------------------------------------------ */
+  .hero {
+    margin-bottom: 3.5rem;
+  }
+
+  .hero h1,
+  .post-header h1 {
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    border-bottom: var(--rule) solid var(--edge);
+    padding-bottom: 0.22em;
+    margin: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 0.5rem + 6.7vw, 7rem);
+  }
+
+  .post-header h1 {
+    font-size: clamp(1.9rem, 0.9rem + 4.5vw, 4.5rem);
+  }
+
+  /* Manifesto highlight: chartreuse bg + ink text in light,
+     chartreuse text in dark. */
+  .hero .hl {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    padding: 0 0.12em;
+    margin-left: -0.12em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .dark .hero .hl {
+    background-color: transparent;
+    color: var(--color-chartreuse);
+    padding: 0;
+    margin-left: 0;
+  }
+
+  .post-header {
+    margin-bottom: 3rem;
+  }
+
+  .series-banner {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    border-left: var(--rule) solid var(--edge-accent);
+    padding-left: 0.9rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .series-banner a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--edge-accent);
+  }
+
+  .series-banner a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    text-decoration-color: var(--color-ink);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Prose — article body                                                */
+  /* ------------------------------------------------------------------ */
+  .prose {
+    max-width: 46rem;
+  }
+
+  .prose > :first-child {
+    margin-top: 0;
+  }
+
+  .prose p {
+    margin: 1.15em 0;
+  }
+
+  .prose h2 {
+    font-size: clamp(1.5rem, 1.15rem + 1.75vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin: 2.4em 0 0.8em;
+  }
+
+  .prose h2::before {
+    content: '';
+    display: block;
+    width: 2.75rem;
+    height: 5px;
+    background-color: var(--edge-accent);
+    margin-bottom: 0.65em;
+  }
+
+  .prose h3 {
+    font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    margin: 2.2em 0 0.7em;
+  }
+
+  /* OpenSpec "#### Scenario:" motif */
+  .prose h4 {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 2em 0 0.6em;
+  }
+
+  .prose a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--edge-accent);
+  }
+
+  .prose a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    text-decoration-color: var(--color-ink);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin: 1.15em 0;
+    padding-left: 1.5em;
+  }
+
+  .prose ul {
+    list-style: square;
+  }
+
+  .prose li {
+    margin: 0.45em 0;
+  }
+
+  .prose li::marker {
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+
+  .prose ol li::marker {
+    font-family: var(--font-mono);
+  }
+
+  .prose blockquote {
+    border-left: var(--rule) solid var(--edge-accent);
+    margin: 2rem 0;
+    padding: 0.2rem 0 0.2rem 1.4rem;
+    font-size: 1.15em;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .prose blockquote p {
+    margin: 0.6em 0;
+  }
+
+  .prose hr {
+    border: 0;
+    width: 5rem;
+    height: var(--rule);
+    background-color: var(--edge);
+    margin: 3.5rem 0;
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border: 3px solid var(--edge);
+  }
+
+  .prose figure {
+    margin: 2.25rem 0;
+  }
+
+  .prose figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+  }
+
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    margin: 2.25rem 0;
+  }
+
+  .prose th,
+  .prose td {
+    border: 2px solid var(--edge);
+    padding: 0.55rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .prose th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .prose :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: var(--surface);
+    padding: 0.12em 0.4em;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Code blocks — Shiki dual themes (defaultColor: false)               */
+  /* ------------------------------------------------------------------ */
+  .astro-code {
+    margin: 2.25rem 0;
+    padding: 1.4rem 1.5rem;
+    border: 3px solid var(--edge);
+    max-width: 100%;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    tab-size: 2;
+  }
+
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+    font-style: var(--shiki-light-font-style, normal);
+    font-weight: var(--shiki-light-font-weight, 400);
+    text-decoration: var(--shiki-light-text-decoration, none);
+  }
+
+  .dark .astro-code,
+  .dark .astro-code span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+    font-style: var(--shiki-dark-font-style, normal);
+    font-weight: var(--shiki-dark-font-weight, 400);
+    text-decoration: var(--shiki-dark-text-decoration, none);
+  }
+
+  .astro-code code {
+    display: block;
+    font: inherit;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Scenario card — the OpenSpec GIVEN/WHEN/THEN signature block        */
+  /* ------------------------------------------------------------------ */
+  .scenario {
+    border: 3px solid var(--edge);
+    background-color: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    padding: 1.5rem 1.6rem 1.6rem;
+    margin: 2.5rem 0;
+  }
+
+  .scenario::before {
+    content: 'SCENARIO';
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    background-color: var(--fg);
+    color: var(--bg);
+    padding: 0.3rem 0.65rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .scenario p {
+    margin: 0.4em 0;
+  }
+
+  /* GIVEN/WHEN/THEN: ink + thick chartreuse underline in light,
+     chartreuse-on-ink text in dark. */
+  .scenario b {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--color-chartreuse);
+    text-underline-offset: 4px;
+  }
+
+  .dark .scenario b {
+    text-decoration: none;
+    color: var(--color-chartreuse);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Post cards & lists                                                  */
+  /* ------------------------------------------------------------------ */
+  .post-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.4rem;
+    border-top: 3px solid var(--edge);
+    padding: 1.6rem 0 1.75rem;
+  }
+
+  .post-card-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .post-card h3 {
+    font-size: clamp(1.35rem, 1.05rem + 1.5vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .post-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-card h3 a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .post-card .description {
+    margin: 0.7rem 0 0;
+    max-width: 40rem;
+  }
+
+  .post-card .meta {
+    margin-top: 0.8rem;
+  }
+
+  /* Giant "01" counter. Light: ink on chartreuse highlight (never
+     chartreuse text on paper). Dark: chartreuse text. */
+  .episode-number {
+    font-size: clamp(2.6rem, 1.8rem + 4vw, 4.75rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    padding: 0.06em 0.1em;
+  }
+
+  .dark .episode-number {
+    background-color: transparent;
+    color: var(--color-chartreuse);
+    padding: 0.06em 0;
+  }
+
+  .post-list {
+    margin-top: 4rem;
+  }
+
+  .post-list > h2 {
+    font-size: clamp(1.6rem, 1.25rem + 1.75vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+
+  .post-list > h2::before {
+    content: '';
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    background-color: var(--edge-accent);
+    margin-right: 0.45em;
+  }
+
+  .post-list > .post-card:last-of-type {
+    border-bottom: 3px solid var(--edge);
+  }
+
+  .episode-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .episode-list li:last-child .post-card {
+    border-bottom: 3px solid var(--edge);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Series card (home)                                                  */
+  /* ------------------------------------------------------------------ */
+  .series-card {
+    border: 3px solid var(--edge);
+    background-color: var(--surface);
+    padding: 1.75rem 1.8rem 1.9rem;
+    margin: 3rem 0;
+  }
+
+  .series-card .kicker {
+    margin-bottom: 0.9rem;
+  }
+
+  .series-card h2 {
+    font-size: clamp(1.7rem, 1.3rem + 2vw, 2.6rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .series-card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .series-card h2 a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .series-card > p:last-child {
+    margin: 0.9rem 0 0;
+    max-width: 40rem;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Series prev/next navigation                                         */
+  /* ------------------------------------------------------------------ */
+  .series-nav {
+    margin-top: 4.5rem;
+    border-top: var(--rule) solid var(--edge);
+    padding-top: 1.6rem;
+  }
+
+  .series-nav > p {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 1.2rem;
+  }
+
+  .series-nav > p a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--edge-accent);
+  }
+
+  .series-nav > p a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    text-decoration-color: var(--color-ink);
+  }
+
+  .series-nav-links {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .series-nav-links a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    border: 3px solid var(--edge);
+    padding: 1.15rem 1.3rem 1.3rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .series-nav-links .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .series-nav-links .title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .series-nav-links a:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .series-nav-links a:hover .label {
+    color: inherit;
+  }
+
+  .dark .series-nav-links a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 40em) {
+    .series-nav-links {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .series-nav-links a[rel='next'] {
+      grid-column: 2;
+      text-align: right;
+      align-items: flex-end;
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Block buttons: all-posts link, 404 links                            */
+  /* ------------------------------------------------------------------ */
+  .all-posts-link,
+  .not-found-links a {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: inherit;
+    text-decoration: none;
+    border: 3px solid var(--edge);
+    padding: 0.8rem 1.2rem;
+  }
+
+  .all-posts-link {
+    margin-top: 2rem;
+  }
+
+  .all-posts-link:hover,
+  .not-found-links a:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .dark .all-posts-link:hover,
+  .dark .not-found-links a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+  }
+
+  .not-found-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Footer — always the inverted ink block, chartreuse top rule         */
+  /* ------------------------------------------------------------------ */
+  .site-footer {
+    border-top: var(--rule) solid var(--color-chartreuse);
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    padding: 3rem var(--bleed) 2.5rem;
+  }
+
+  .site-footer .wordmark-big {
+    font-size: clamp(1.9rem, 0.7rem + 5.3vw, 5.25rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+    margin: 0;
+  }
+
+  /* Chartreuse full stop: dark mode only (light keeps zero chartreuse text). */
+  .site-footer .wordmark-big .dot {
+    color: inherit;
+  }
+
+  .dark .site-footer .wordmark-big .dot {
+    color: var(--color-chartreuse);
+  }
+
+  .site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.75rem;
+    margin-top: 1.9rem;
+  }
+
+  .site-footer nav a {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--color-chartreuse);
+  }
+
+  .site-footer nav a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+    text-decoration-color: var(--color-ink);
+  }
+
+  .site-footer .tagline {
+    margin: 1.9rem 0 0;
+    max-width: 40rem;
+  }
+
+  .site-footer .colophon {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ash);
+    margin: 2.25rem 0 0;
+  }
+
+  /* Ink background in both modes → focus ring must be chartreuse. */
+  .site-footer :focus-visible {
+    outline-color: var(--color-chartreuse);
+  }
+}

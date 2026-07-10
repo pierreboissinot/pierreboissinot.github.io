@@ -1,0 +1,24 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../lib/blog';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const rssHref = lang === 'fr' ? '/fr/rss.xml' : '/rss.xml';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <p class="wordmark-big">pierre boissinot<span class="dot" aria-hidden="true">.</span></p>
+  <nav aria-label={t('a11y.footerNav')}>
+    <a href={rssHref}>{t('footer.rss')}</a>
+    <a href="https://github.com/pierreboissinot" rel="me">GitHub</a>
+    <a href="https://www.linkedin.com/in/pierreboissinot/" rel="me">LinkedIn</a>
+  </nav>
+  <p class="tagline">{t('footer.builtWith')}</p>
+  <p class="colophon">© {year} Pierre Boissinot</p>
+</footer>

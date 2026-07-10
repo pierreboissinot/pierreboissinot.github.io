@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/blog';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const posts = await getPosts(lang);
+---
+
+<BaseLayout {lang} title={t('nav.posts')} description={t('site.description')} translationUrl="/fr/posts/">
+  <section class="hero">
+    <p class="kicker">{posts.length} {t('nav.posts')}</p>
+    <h1>{t('nav.posts')}</h1>
+  </section>
+  <section class="post-list">
+    {posts.map((post) => <PostCard {post} />)}
+  </section>
+</BaseLayout>
