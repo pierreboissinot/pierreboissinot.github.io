@@ -42,3 +42,12 @@ export function readingTimeMinutes(body: string | undefined): number {
   const words = (body ?? '').trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
+
+export type Talk = CollectionEntry<'talks'>;
+
+export const talksUrl = (lang: Lang) => `${lang === 'fr' ? '/fr' : ''}/talks/`;
+
+export async function getTalks(): Promise<Talk[]> {
+  const talks = await getCollection('talks');
+  return talks.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}

@@ -1,0 +1,46 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang, Talk } from '../lib/blog';
+
+interface Props {
+  lang: Lang;
+  talk: Talk;
+}
+
+const { lang, talk } = Astro.props;
+const t = useTranslations(lang);
+const { title, event, city, date, language, coSpeakers, summary, video, slides, eventUrl } =
+  talk.data;
+const links = [
+  { href: video, label: t('talks.video') },
+  { href: slides, label: t('talks.slides') },
+  { href: eventUrl, label: t('talks.event') },
+].filter((l): l is { href: string; label: string } => Boolean(l.href));
+---
+
+<article class="post-card talk-card">
+  <div class="post-card-body">
+    <p class="kicker">{event} · {city}</p>
+    <h3 lang={language}>
+      {links.length > 0 ? <a href={links[0].href}>{title}</a> : title}
+    </h3>
+    <p class="description">{summary[lang]}</p>
+    <p class="meta">
+      <FormattedDate {date} {lang} />
+      {coSpeakers.length > 0 && <> · {t('talks.with')} {coSpeakers.join(', ')}</>}
+      {language !== lang && <> · {t('talks.inFrench')}</>}
+    </p>
+    {
+      links.length > 0 && (
+        <ul class="talk-links">
+          {links.map((l) => (
+            <li>
+              <a href={l.href}>{l.label} →</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>

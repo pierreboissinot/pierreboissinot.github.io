@@ -1,5 +1,5 @@
 import { defineCollection, reference, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 
 const blog = defineCollection({
   loader: glob({ base: './src/content/blog', pattern: '**/*.md' }),
@@ -33,4 +33,20 @@ const series = defineCollection({
   }),
 });
 
-export const collections = { blog, series };
+const talks = defineCollection({
+  loader: file('./src/content/talks.yaml'),
+  schema: z.object({
+    title: z.string(),
+    event: z.string(),
+    city: z.string(),
+    date: z.coerce.date(),
+    language: z.enum(['en', 'fr']),
+    coSpeakers: z.array(z.string()).default([]),
+    summary: z.object({ en: z.string(), fr: z.string() }),
+    video: z.url().optional(),
+    slides: z.url().optional(),
+    eventUrl: z.url().optional(),
+  }),
+});
+
+export const collections = { blog, series, talks };

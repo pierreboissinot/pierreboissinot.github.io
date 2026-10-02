@@ -2,7 +2,7 @@
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { useTranslations } from '../i18n/utils';
-import type { Lang } from '../lib/blog';
+import { talksUrl, type Lang } from '../lib/blog';
 
 interface Props {
   lang: Lang;
@@ -13,12 +13,14 @@ const { lang, translationUrl = null } = Astro.props;
 const t = useTranslations(lang);
 const home = lang === 'fr' ? '/fr/' : '/';
 const postsUrl = lang === 'fr' ? '/fr/posts/' : '/posts/';
+const talksHref = talksUrl(lang);
 ---
 
 <header class="site-header">
   <a href={home} class="wordmark">pierre boissinot.</a>
   <nav aria-label={t('a11y.mainNav')}>
     <a href={postsUrl}>{t('nav.posts')}</a>
+    <a href={talksHref}>{t('nav.talks')}</a>
     <LanguageSwitcher {lang} {translationUrl} />
     <ThemeToggle {lang} />
   </nav>

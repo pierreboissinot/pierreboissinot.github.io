@@ -709,6 +709,35 @@
     border-bottom: 3px solid var(--edge);
   }
 
+  .talk-card .kicker {
+    margin-bottom: 0.7rem;
+  }
+
+  .talk-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.2rem;
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .talk-links a {
+    color: inherit;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .talk-links a:hover {
+    background-color: var(--color-chartreuse);
+    color: var(--color-ink);
+  }
+
   .episode-list {
     list-style: none;
     margin: 0;
