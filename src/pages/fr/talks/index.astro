@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TalkCard from '../../../components/TalkCard.astro';
+import { getTalks } from '../../../lib/blog';
+import { useTranslations } from '../../../i18n/utils';
+
+const lang = 'fr';
+const t = useTranslations(lang);
+const talks = await getTalks();
+---
+
+<BaseLayout {lang} title={t('nav.talks')} description={t('talks.deck')} translationUrl="/talks/">
+  <section class="hero">
+    <p class="kicker">{talks.length} {t('talks.count')}</p>
+    <h1>{t('nav.talks')}</h1>
+    <p class="deck">{t('talks.deck')}</p>
+  </section>
+  <section class="post-list">
+    {talks.map((talk) => <TalkCard {lang} {talk} />)}
+  </section>
+</BaseLayout>

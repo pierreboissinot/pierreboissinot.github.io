@@ -1,0 +1,33 @@
+- id: volcamp-2026-specs
+  title: "On a arrêté de « bricoler » nos specs : ce que l'IA a changé dans notre façon de travailler en petite équipe"
+  event: Volcamp 2026
+  city: Clermont-Ferrand
+  date: 2026-10-01
+  language: fr
+  summary:
+    en: "A field report on spec-driven development in production: one feature replayed from explore to archive with OpenSpec, the signals that a spec isn't ready for an agent, and an adoption rule that held up in a team of about ten."
+    fr: "Retour d'expérience sur le Spec-Driven Development en production : une feature rejouée de l'explore à l'archive avec OpenSpec, les signaux d'une spec pas prête pour un agent, et une règle d'adoption qui a tenu dans une équipe d'une dizaine de personnes."
+  video: https://youtu.be/31Nd2gvjo8Q
+
+- id: agile-nantes-2026-openspec
+  title: "Et si on coachait une IA pour des spécifications pertinentes ?"
+  event: Agile Nantes
+  city: Nantes
+  date: 2026-07-01
+  language: fr
+  summary:
+    en: "OpenSpec and spec-driven development with AI agents, for an agile audience: a four-step workflow, the warning signs of a spec that will produce unusable code, gradual adoption, and what it changes for PO, PM and dev roles."
+    fr: "OpenSpec et le Spec-Driven Development à l'ère des agents IA, pour un public agiliste : un workflow en quatre étapes, les signaux d'une spec vouée à générer du code inutilisable, l'adoption progressive et ce que ça change pour les rôles PO, PM et dev."
+  eventUrl: https://www.meetup.com/agile-nantes-sessions-mensuelles/events/310238239/
+
+- id: afup-nantes-2024-cicd-components
+  title: "Components CI/CD réutilisables dans GitHub et GitLab"
+  event: AFUP Nantes
+  city: Nantes
+  date: 2024-10-29
+  language: fr
+  coSpeakers: [Lucas Mirloup]
+  summary:
+    en: "Stop copy-pasting pipelines: factoring CI/CD with the reusable components of GitHub and GitLab."
+    fr: "Arrêter de copier-coller ses pipelines : factoriser sa CI/CD avec les composants réutilisables de GitHub et GitLab."
+  video: https://youtu.be/qrmSgIZ3n14
